@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}Товары{% endblock %}
+{% block menu %}
+    <li class="nav-item"><a href="{% url 'webapp:stat' %}" class="nav-link">Статистика</a></li>
+    <li class="nav-item"><a href="{% url 'webapp:product_create' %}" class="nav-link">Добавить товар</a></li>
+{% endblock %}
+{% block content %}
+    <h1 class="text-center">Товары</h1>
+
+    <div class="container">
+        <div class="row">
+            {% for product in product_list %}
+                <div class="col-md-6 col-lg-3">
+                <div class="card card-1 mt-3">
+                        <div style="height: 200px; background-image: url({{ product.photo.url }}); background-repeat: no-repeat; background-size: contain; position:"></div>
+                        {#                    <img src="{{ product.photo.url }}" class="card-img-top" alt="{{ product.name }}" style="height: 200px">#}
+                        <div class="card-body card-content">
+                            <div style="min-height: 75px;"><h5 class="card-title">{{ product.name }}</h5></div>
+                            <div style="min-height: 50px;"><p class="card-text">{{ product.get_category_display }} | {{ product.price }} сом</p></div>
+                            <a href="{% url "webapp:product_detail" product.pk %}"
+                               class="btn btn-primary">Посмотреть</a>
+                            <a href="{% url 'webapp:basket_change' %}?pk={{ product.pk }}&action=add"
+                               class="btn btn-primary mt-2">В корзину</a>
+                        </div>
+                </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
